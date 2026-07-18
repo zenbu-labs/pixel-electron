@@ -49,11 +49,15 @@ done
 echo "== gn gen =="
 cd "$WORK/electron/src"
 export CHROMIUM_BUILDTOOLS_PATH="$PWD/buildtools"
-gn gen out/Build --args="import(\"//electron/build/args/$GN_BUILD_TYPE.gn\") use_remoteexec=false"
+# the checkout's own pinned binaries: the depot_tools gn/ninja wrappers
+# require a bootstrapped depot_tools python that we deliberately skip
+GN="$PWD/buildtools/mac/gn"
+NINJA="$PWD/third_party/ninja/ninja"
+"$GN" gen out/Build --args="import(\"//electron/build/args/$GN_BUILD_TYPE.gn\") use_remoteexec=false"
 
 echo "== ninja (this is the long part) =="
-ninja -C out/Build electron
-ninja -C out/Build electron:electron_dist_zip
+"$NINJA" -C out/Build electron
+"$NINJA" -C out/Build electron:electron_dist_zip
 
 ASSET="electron-v$VERSION-darwin-arm64.zip"
 cp out/Build/dist.zip "$OUT_DIR/$ASSET"
