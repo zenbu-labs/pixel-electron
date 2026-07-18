@@ -27,6 +27,11 @@ if [ ! -d "$WORK/depot_tools" ]; then
 fi
 export PATH="$WORK/depot_tools:$PATH"
 export DEPOT_TOOLS_UPDATE=0
+# build scripts shell out to `gn` from PATH; the depot_tools wrapper refuses
+# to run until its pinned python is bootstrapped
+if [ -x "$WORK/depot_tools/ensure_bootstrap" ]; then
+  "$WORK/depot_tools/ensure_bootstrap"
+fi
 
 mkdir -p "$WORK/electron"
 cd "$WORK/electron"
