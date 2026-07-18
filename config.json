@@ -1,0 +1,5 @@
+{
+  "platforms": ["darwin-arm64"],
+  "supported_majors": 2,
+  "minimum_version": "43.1.1"
+}
