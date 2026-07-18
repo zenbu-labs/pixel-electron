@@ -48,6 +48,10 @@ done
 
 echo "== gn gen =="
 cd "$WORK/electron/src"
+# //electron/BUILD.gn lists .git/packed-refs as a gn input; a no-history
+# checkout has no packed refs until we pack them
+git -C electron pack-refs --all || true
+[ -f electron/.git/packed-refs ] || touch electron/.git/packed-refs
 export CHROMIUM_BUILDTOOLS_PATH="$PWD/buildtools"
 # the checkout's own pinned binaries: the depot_tools gn/ninja wrappers
 # require a bootstrapped depot_tools python that we deliberately skip
