@@ -62,7 +62,9 @@ export CHROMIUM_BUILDTOOLS_PATH="$PWD/buildtools"
 # require a bootstrapped depot_tools python that we deliberately skip
 GN="$PWD/buildtools/mac/gn"
 NINJA="$PWD/third_party/ninja/ninja"
-"$GN" gen out/Build --args="import(\"//electron/build/args/$GN_BUILD_TYPE.gn\") use_remoteexec=false"
+# no-history checkouts have no git tags, so electron would stamp itself
+# v0.0.0-no-git-tag-found without the explicit version override
+"$GN" gen out/Build --args="import(\"//electron/build/args/$GN_BUILD_TYPE.gn\") use_remoteexec=false override_electron_version=\"$VERSION\""
 
 echo "== ninja (this is the long part) =="
 "$NINJA" -C out/Build electron
