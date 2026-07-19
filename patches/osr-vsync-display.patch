@@ -1,5 +1,5 @@
 diff --git a/shell/browser/osr/osr_render_widget_host_view.cc b/shell/browser/osr/osr_render_widget_host_view.cc
-index b15fef3..7d4a713 100644
+index b15fef3..b5769ff 100644
 --- a/shell/browser/osr/osr_render_widget_host_view.cc
 +++ b/shell/browser/osr/osr_render_widget_host_view.cc
 @@ -206,6 +206,9 @@ OffScreenRenderWidgetHostView::OffScreenRenderWidgetHostView(
@@ -36,7 +36,7 @@ index b15fef3..7d4a713 100644
 +void OffScreenRenderWidgetHostView::UpdateVSyncDisplay() {
 +  if (!compositor_)
 +    return;
-+  if (auto* screen = display::Screen::GetScreen()) {
++  if (auto* screen = display::Screen::Get()) {
 +    compositor_->SetVSyncDisplayID(screen->GetPrimaryDisplay().id());
 +  }
 +}
